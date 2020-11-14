@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
 	private static final LeagueManager leagueManager = new PremierLeagueManager();
 	final static Scanner USER_INPUT = new Scanner(System.in);
-	private static boolean checkerResult;
+	private static boolean validationCheck;
 	private static String clubName;
 	private static String clubLocation;
 	private static int clubMembers;
@@ -23,42 +23,42 @@ public class Main {
 				case "1":
 					System.out.println("\n------------------------------------------------------ Add a new football Club -----------------------------------------------------");
 					addANewFootballClub();
-					checkerResult = true;
+					validationCheck = true;
 				//	decision();
 					break;
 
 				case "2":
 					System.out.println("\n-------------------------------------------------- Removing a vehicle from the parking lot --------------------------------------------------");
 					leagueManager.deleteAClub();
-					checkerResult = true;
+					validationCheck = true;
 			//		decision();
 					break;
 
 				case "3":
 					System.out.println("\n-------------------------------------------------- Display the various statistics for a selected club --------------------------------------------------");
 //					selectedClubDetails();
-					checkerResult = true;
+					validationCheck = true;
 			//		decision();
 					break;
 
 				case "4":
 					System.out.println("\n-------------------------------------------------- Premier League Table --------------------------------------------------");
 					leagueManager.displayPremierLeagueTable();
-					checkerResult = true;
+					validationCheck = true;
 				//	decision();
 					break;
 
 				case "5":
 					System.out.println("\n-------------------------------------------------- Played match details --------------------------------------------------");
 					matchDetails();
-					checkerResult = true;
+					validationCheck = true;
 				//	decision();
 					break;
 
 				case "6":
 					leagueManager.dataSaveToFile("premierLeagueClubsList.txt");
 					System.out.println("\n************************************************************* End the Programme *************************************************************");
-					checkerResult = false;
+					validationCheck = false;
 					break;
 
 				default:
@@ -66,7 +66,7 @@ public class Main {
 				//	decision();
 			}
 
-		}while (checkerResult);
+		}while (validationCheck);
 	}
 
 
@@ -93,10 +93,10 @@ public class Main {
 
 			if (endDecision.equalsIgnoreCase("e")) {
 				System.out.println("\n******************************************************** End the Programme ********************************************************");
-				checkerResult = false;
+				validationCheck = false;
 				break;
 			} else if (endDecision.equalsIgnoreCase("c")) {
-				checkerResult = true;
+				validationCheck = true;
 				break;
 			} else {
 				System.out.println("I can't understand your choose");
@@ -106,10 +106,14 @@ public class Main {
 
 
 	private static void addANewFootballClub() {
-		
-		inputClubName();
-		inputClubLocation();
-		inputClubMembers();
+
+		if (PremierLeagueManager.premierLeagueClubsList.size() < 20){
+			inputClubName();
+			inputClubLocation();
+			inputClubMembers();
+		}else {
+			System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		}
 
 		SportsClub sportsClub1 = new FootballClub("Leicester City", "London", 32);
 		SportsClub sportsClub2 = new FootballClub("Chelsea", "America", 23);
@@ -126,17 +130,23 @@ public class Main {
 	}
 
 	private static void inputClubName() {
-		boolean duplicate;
+		boolean duplicate = true;
 		do {
 			Scanner input = new Scanner(System.in);
 			System.out.print("1. Enter the name of the club          : ");
 			clubName = input.nextLine();
-			checkerResult = stringsChecker(clubName);
+			validationCheck = stringsChecker(clubName);
 			for (SportsClub club:PremierLeagueManager.premierLeagueClubsList){
-				checkerResult = !club.getNameOfTheClub().equals(clubName);
-				System.out.println(checkerResult ? "": "Each group must have 11 or more members!");
+				if (club.getNameOfTheClub().equalsIgnoreCase(clubName)){
+					System.out.println("This Club name is Already Register in League!");
+					duplicate = false;
+					break;
+				}else{
+					duplicate = true;
+				}
 			}
-		}while (!checkerResult);
+			validationCheck = duplicate && validationCheck;
+		}while (!validationCheck);
 	}
 
 	private static void inputClubLocation() {
@@ -144,8 +154,8 @@ public class Main {
 			Scanner input = new Scanner(System.in);
 			System.out.print("2. Enter the name of the club location : ");
 			clubLocation = input.nextLine();
-			checkerResult = stringsChecker(clubLocation);
-		}while (!checkerResult);
+			validationCheck = stringsChecker(clubLocation);
+		}while (!validationCheck);
 	}
 
 	private static void inputClubMembers() {
@@ -154,13 +164,13 @@ public class Main {
 				Scanner input = new Scanner(System.in);
 				System.out.print("3. Number of team members : ");
 				clubMembers = input.nextInt();
-				checkerResult = (clubMembers >= 11);
-				System.out.println(checkerResult ? "": "Each group must have 11 or more members!");
+				validationCheck = (clubMembers >= 11);
+				System.out.println(validationCheck ? "": "Each group must have 11 or more members!");
 			}catch (RuntimeException e){
 				System.out.println("Please enter integer input!");
-				checkerResult = false;
+				validationCheck = false;
 			}
-		}while (!checkerResult);
+		}while (!validationCheck);
 	}
 
 
@@ -197,7 +207,7 @@ public class Main {
 			if (value.matches("^[ A-Za-z]+$")){		//https://stackoverflow.com/questions/24191040/checking-to-see-if-a-string-is-letters-spaces-only/24191088
 				return true;
 			}else {
-			System.out.println("Please enter a valid input!(Don't enter Integers)");
+			System.out.println("Please enter a valid input!(Only Strings)");
 				return false;
 			}
 		}else {
