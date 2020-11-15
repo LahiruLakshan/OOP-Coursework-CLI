@@ -1,7 +1,7 @@
 import java.io.IOException;
 
 public interface LeagueManager {
-	void addFootballClubToPremierLeague(SportsClub sportsClub);
+	void addFootballClubToPremierLeague(SportsClub footballClub);
 	void deleteAClub();
 	void displayVariousStatistics();
 	void displayPremierLeagueTable();

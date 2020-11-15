@@ -5,16 +5,20 @@ import java.util.List;
 
 public class PremierLeagueManager implements LeagueManager{
 
-	final static public int MAX_TEAMS = 20;
 	public static List<SportsClub> premierLeagueClubsList = new ArrayList<>();
 	public List<SportsClub> listOfMatchesTeamA = new ArrayList<>();
 	public List<SportsClub> listOfMatchesTeamB = new ArrayList<>();
 
 
 	@Override
-	public void addFootballClubToPremierLeague(SportsClub sportsClub) {
-		premierLeagueClubsList.add(sportsClub);
-		System.out.println("Data Added");
+	public void addFootballClubToPremierLeague(SportsClub footballClub) {
+		if (premierLeagueClubsList.size() < 20){
+			premierLeagueClubsList.add(footballClub);
+			System.out.println("Number of registered clubs			   : " + premierLeagueClubsList.size());
+			System.out.println("Remaining space for clubs registration : " + (20 - premierLeagueClubsList.size()));
+		}else {
+			System.out.println("Can't create a club for the Premier League!");
+		}
 	}
 
 	@Override
@@ -23,12 +27,12 @@ public class PremierLeagueManager implements LeagueManager{
 			premierLeagueClubsList.sort(Collections.reverseOrder());
 			SportsClub lastTeam = premierLeagueClubsList.get(premierLeagueClubsList.size() -1);
 
-			String bodyFormat = "│ %-25s │ %-15s │ %-6s │ %-3s │ %-5s │ %-4s │ %-4s │ %-4s │ %-4s │ %-6s │%n";
+			String tableFormat = "│ %-25s │ %-15s │ %-6s │ %-3s │ %-5s │ %-4s │ %-4s │ %-4s │ %-4s │ %-6s │%n";
 			System.out.format("┌───────────────────────────┬─────────────────┬────────┬─────┬───────┬──────┬──────┬──────┬──────┬────────┐%n");
 			System.out.format("│ Relegated Club Name       │ Location        │ Played │ Won │ Drawn │ Lost │ GF   │ GA   │ GD   │ Points │%n");
 			System.out.format("┢━──────────────────────────╈─────────────────╈────────╈─────╈───────╈──────╈──────╈──────╈──────╈────────┪%n");
-			System.out.format(bodyFormat,lastTeam.getNameOfTheClub(),lastTeam.getLocation(),((FootballClub) lastTeam).getNumOfPlayedMatches(),
-					((FootballClub) lastTeam).getWins(),((FootballClub) lastTeam).getDraws(),((FootballClub) lastTeam).getDefeats(),
+			System.out.format(tableFormat,lastTeam.getNameOfTheClub(),lastTeam.getLocation(),((FootballClub) lastTeam).getNumOfPlayedMatches(),
+					((FootballClub) lastTeam).getWon(),((FootballClub) lastTeam).getDrawn(),((FootballClub) lastTeam).getLost(),
 					((FootballClub) lastTeam).getNumOfGoalsScored(),((FootballClub) lastTeam).getNumOfGoalsReceived(),((FootballClub) lastTeam).getNumOfGoalsDifference(),((FootballClub) lastTeam).getNumOfPoints() );
 			System.out.format("┗━──────────────────────────┻─────────────────┻────────┻─────┻───────┻──────┻──────┻──────┻──────┻────────┛%n");
 
@@ -47,7 +51,7 @@ public class PremierLeagueManager implements LeagueManager{
 	@Override
 	public void displayPremierLeagueTable() {
 
-		String bodyFormat = "║ %-8s ║ %-25s ║ %-15s ║ %-6s ║ %-3s ║ %-5s ║ %-4s ║ %-4s ║ %-4s ║ %-4s ║ %-6s ║%n";
+		String tableFormat = "║ %-8s ║ %-25s ║ %-15s ║ %-6s ║ %-3s ║ %-5s ║ %-4s ║ %-4s ║ %-4s ║ %-4s ║ %-6s ║%n";
 		System.out.format("╔══════════╦═══════════════════════════╦═════════════════╦════════╦═════╦═══════╦══════╦══════╦══════╦══════╦════════╗%n");
 		System.out.format("║ Position ║ Club Name                 ║ Location        ║ Played ║ Won ║ Drawn ║ Lost ║ GF   ║ GA   ║ GD   ║ Points ║%n");
 		System.out.format("╠══════════╬═══════════════════════════╬═════════════════╬════════╬═════╬═══════╬══════╬══════╬══════╬══════╬════════╣%n");						//https://coolsymbol.com/  <- for symbols
@@ -55,8 +59,8 @@ public class PremierLeagueManager implements LeagueManager{
 		premierLeagueClubsList.sort(Collections.reverseOrder());
 		for (SportsClub sportsClub: premierLeagueClubsList) {
 
-			System.out.format(bodyFormat,premierLeagueClubsList.indexOf(sportsClub) + 1,sportsClub.getNameOfTheClub(),sportsClub.getLocation(),((FootballClub) sportsClub).getNumOfPlayedMatches(),
-					((FootballClub) sportsClub).getWins(),((FootballClub) sportsClub).getDraws(),((FootballClub) sportsClub).getDefeats(),
+			System.out.format(tableFormat,premierLeagueClubsList.indexOf(sportsClub) + 1,sportsClub.getNameOfTheClub(),sportsClub.getLocation(),((FootballClub) sportsClub).getNumOfPlayedMatches(),
+					((FootballClub) sportsClub).getWon(),((FootballClub) sportsClub).getDrawn(),((FootballClub) sportsClub).getLost(),
 					((FootballClub) sportsClub).getNumOfGoalsScored(),((FootballClub) sportsClub).getNumOfGoalsReceived(),((FootballClub) sportsClub).getNumOfGoalsDifference(),((FootballClub) sportsClub).getNumOfPoints() );
 		}
 		System.out.format("╚══════════╩═══════════════════════════╩═════════════════╩════════╩═════╩═══════╩══════╩══════╩══════╩══════╩════════╝%n");
@@ -69,9 +73,9 @@ public class PremierLeagueManager implements LeagueManager{
 		for (SportsClub sportsClub:premierLeagueClubsList){
 			if (sportsClub.getNameOfTheClub().contains(team)){
 				int match = ((FootballClub) sportsClub).getNumOfPlayedMatches() + 1;
-				int won = ((FootballClub) sportsClub).getWins();
-				int drawn = ((FootballClub) sportsClub).getDraws();
-				int lost = ((FootballClub) sportsClub).getDefeats();
+				int won = ((FootballClub) sportsClub).getWon();
+				int drawn = ((FootballClub) sportsClub).getDrawn();
+				int lost = ((FootballClub) sportsClub).getLost();
 				int goalsScore = ((FootballClub) sportsClub).getNumOfGoalsScored() + teamGoals;
 				int goalsReceived = ((FootballClub) sportsClub).getNumOfGoalsReceived() + otherTeamGoals;
 				int goalsDifference = goalsScore - goalsReceived;
@@ -104,11 +108,13 @@ public class PremierLeagueManager implements LeagueManager{
 
 	@Override
 	public void dataSaveToFile(String fileName) throws IOException {
-		FileOutputStream fos = new FileOutputStream(fileName);
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(premierLeagueClubsList);
-		oos.close();
-		fos.close();
+		FileOutputStream file = new FileOutputStream(fileName);
+		ObjectOutputStream outputStream = new ObjectOutputStream(file);
+		outputStream.writeObject(premierLeagueClubsList);
+		outputStream.flush();
+		outputStream.close();
+		file.close();
+		System.out.println("Data saving is successful!");
 	}
 
 	@Override

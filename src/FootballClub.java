@@ -1,12 +1,10 @@
-import java.io.Serializable;
-
 public class FootballClub extends SportsClub implements Comparable<FootballClub> {
 
-	private String lastDayOfPlaying = "Not played yet";
-	private String groundName;
-	private int wins;
-	private int draws;
-	private int defeats;
+	private String matchDate = "Not played yet";
+	private String matchVenue;
+	private int won;
+	private int drawn;
+	private int lost;
 	private int numOfGoalsScored;
 	private int numOfGoalsReceived;
 	private int numOfGoalsDifference;
@@ -18,12 +16,12 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 		super(nameOfTheClub, location, numOfMembers);
 	}
 	//for premier league table
-	public FootballClub(String nameOfTheClub, String location, int numOfMembers, String lastDayOfPlaying, int numOfPlayedMatches, int wins , int draws, int defeats, int numOfGoalsScored, int numOfGoalsReceived, int numOfGoalsDifference, int numOfPoints) {
+	public FootballClub(String nameOfTheClub, String location, int numOfMembers, String matchDate, int numOfPlayedMatches, int won, int drawn, int lost, int numOfGoalsScored, int numOfGoalsReceived, int numOfGoalsDifference, int numOfPoints) {
 		super(nameOfTheClub, location, numOfMembers);
-		this.lastDayOfPlaying = lastDayOfPlaying;
-		this.wins = wins;
-		this.draws = draws;
-		this.defeats = defeats;
+		this.matchDate = matchDate;
+		this.won = won;
+		this.drawn = drawn;
+		this.lost = lost;
 		this.numOfGoalsScored = numOfGoalsScored;
 		this.numOfGoalsReceived = numOfGoalsReceived;
 		this.numOfGoalsDifference = numOfGoalsDifference;
@@ -31,10 +29,10 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 		this.numOfPlayedMatches = numOfPlayedMatches;
 	}
 
-	public FootballClub(String nameOfTheClub, String location, int numOfMembers, String lastDayOfPlaying, String groundName, int numOfGoalsScored, int numOfGoalsReceived) {
+	public FootballClub(String nameOfTheClub, String location, int numOfMembers, String matchDate, String matchVenue, int numOfGoalsScored, int numOfGoalsReceived) {
 		super(nameOfTheClub, location, numOfMembers);
-		this.lastDayOfPlaying = lastDayOfPlaying;
-		this.groundName = groundName;
+		this.matchDate = matchDate;
+		this.matchVenue = matchVenue;
 		this.numOfGoalsScored = numOfGoalsScored;
 		this.numOfGoalsReceived = numOfGoalsReceived;
 	}
@@ -49,28 +47,28 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 	//		this.numOfPlayedMatches = i1;
 	//	}
 
-	public int getWins() {
-		return wins;
+	public int getWon() {
+		return won;
 	}
 
-	public void setWins(int wins) {
-		this.wins = wins;
+	public void setWon(int won) {
+		this.won = won;
 	}
 
-	public int getDraws() {
-		return draws;
+	public int getDrawn() {
+		return drawn;
 	}
 
-	public void setDraws(int draws) {
-		this.draws = draws;
+	public void setDrawn(int drawn) {
+		this.drawn = drawn;
 	}
 
-	public int getDefeats() {
-		return defeats;
+	public int getLost() {
+		return lost;
 	}
 
-	public void setDefeats(int defeats) {
-		this.defeats = defeats;
+	public void setLost(int lost) {
+		this.lost = lost;
 	}
 
 	public int getNumOfGoalsScored() {
@@ -89,22 +87,6 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 		this.numOfGoalsReceived = numOfGoalsReceived;
 	}
 
-	public int getNumOfPlayedMatches() {
-		return numOfPlayedMatches;
-	}
-
-	public void setNumOfPlayedMatches(int numOfPlayedMatches) {
-		this.numOfPlayedMatches = numOfPlayedMatches;
-	}
-
-	public String getLastDayOfPlaying() {
-		return lastDayOfPlaying;
-	}
-
-	public void setLastDayOfPlaying(String lastDayOfPlaying) {
-		this.lastDayOfPlaying = lastDayOfPlaying;
-	}
-
 	public int getNumOfGoalsDifference() {
 		return numOfGoalsDifference;
 	}
@@ -121,20 +103,36 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 		this.numOfPoints = numOfPoints;
 	}
 
-	public String getGroundName() {
-		return groundName;
+	public int getNumOfPlayedMatches() {
+		return numOfPlayedMatches;
 	}
 
-	public void setGroundName(String groundName) {
-		this.groundName = groundName;
+	public void setNumOfPlayedMatches(int numOfPlayedMatches) {
+		this.numOfPlayedMatches = numOfPlayedMatches;
+	}
+
+	public String getMatchDate() {
+		return matchDate;
+	}
+
+	public void setMatchDate(String matchDate) {
+		this.matchDate = matchDate;
+	}
+
+	public String getMatchVenue() {
+		return matchVenue;
+	}
+
+	public void setMatchVenue(String matchVenue) {
+		this.matchVenue = matchVenue;
 	}
 
 
 	@Override
 	public String toString() {
 		return "FootballClub{" +
-				"lastDayOfPlaying='" + lastDayOfPlaying + '\'' +
-				", groundName='" + groundName + '\'' +
+				"lastDayOfPlaying='" + matchDate + '\'' +
+				", groundName='" + matchVenue + '\'' +
 				", numOfGoalsScored=" + numOfGoalsScored +
 				", numOfGoalsReceived=" + numOfGoalsReceived +
 				'}';
@@ -145,13 +143,7 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 		if (getNumOfPoints() > fbc.getNumOfPoints()){
 			return 1;
 		}else if (getNumOfPoints() == fbc.getNumOfPoints()){
-			if (getNumOfGoalsDifference() > fbc.getNumOfGoalsDifference()){
-				return 1;
-			}else if (getNumOfGoalsDifference() == fbc.getNumOfGoalsDifference()){
-				return 0;
-			}else {
-				return -1;
-			}
+			return Integer.compare(getNumOfGoalsDifference(), fbc.getNumOfGoalsDifference());
 		}else {
 			return -1;
 		}
