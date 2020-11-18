@@ -14,6 +14,7 @@ public class PremierLeagueManager implements LeagueManager{
 	public void addFootballClubToPremierLeague(SportsClub footballClub) {
 		if (premierLeagueClubsList.size() < 20){
 			premierLeagueClubsList.add(footballClub);
+			System.out.println("✔ Data added successfully!");
 			System.out.println("Number of registered clubs			   : " + premierLeagueClubsList.size());
 			System.out.println("Remaining space for clubs registration : " + (20 - premierLeagueClubsList.size()));
 		}else {
@@ -27,43 +28,113 @@ public class PremierLeagueManager implements LeagueManager{
 			premierLeagueClubsList.sort(Collections.reverseOrder());
 			SportsClub lastTeam = premierLeagueClubsList.get(premierLeagueClubsList.size() -1);
 
-			String tableFormat = "│ %-25s │ %-15s │ %-6s │ %-3s │ %-5s │ %-4s │ %-4s │ %-4s │ %-4s │ %-6s │%n";
-			System.out.format("┌───────────────────────────┬─────────────────┬────────┬─────┬───────┬──────┬──────┬──────┬──────┬────────┐%n");
-			System.out.format("│ Relegated Club Name       │ Location        │ Played │ Won │ Drawn │ Lost │ GF   │ GA   │ GD   │ Points │%n");
-			System.out.format("┢━──────────────────────────╈─────────────────╈────────╈─────╈───────╈──────╈──────╈──────╈──────╈────────┪%n");
+			String tableFormat = "║ %-25s ║ %-15s ║ %-6s ║ %-3s ║ %-5s ║ %-4s ║ %-4s ║ %-4s ║ %-4s ║ %-6s ║%n";
+			System.out.format("╔═══════════════════════════╦═════════════════╦════════╦═════╦═══════╦══════╦══════╦══════╦══════╦════════╗%n");
+			System.out.format("║ Relegated Club Name       ║ Location        ║ Played ║ Won ║ Drawn ║ Lost ║ GF   ║ GA   ║ GD   ║ Points ║%n");
+			System.out.format("╠═══════════════════════════╬═════════════════╬════════╬═════╬═══════╬══════╬══════╬══════╬══════╬════════╣%n");
 			System.out.format(tableFormat,lastTeam.getNameOfTheClub(),lastTeam.getLocation(),((FootballClub) lastTeam).getNumOfPlayedMatches(),
 					((FootballClub) lastTeam).getWon(),((FootballClub) lastTeam).getDrawn(),((FootballClub) lastTeam).getLost(),
 					((FootballClub) lastTeam).getNumOfGoalsScored(),((FootballClub) lastTeam).getNumOfGoalsReceived(),((FootballClub) lastTeam).getNumOfGoalsDifference(),((FootballClub) lastTeam).getNumOfPoints() );
-			System.out.format("┗━──────────────────────────┻─────────────────┻────────┻─────┻───────┻──────┻──────┻──────┻──────┻────────┛%n");
+			System.out.format("╚═══════════════════════════╩═════════════════╩════════╩═════╩═══════╩══════╩══════╩══════╩══════╩════════╝%n");
 
 			premierLeagueClubsList.remove(premierLeagueClubsList.size() - 1);
+			System.out.println("\nNumber of registered clubs			   : " + premierLeagueClubsList.size());
+			System.out.println("Remaining space for clubs registration : " + (20 - premierLeagueClubsList.size()));
 		}else {
 			System.out.println("Only one team in the Premier League Championship");
 		}
 	}
 
 	@Override
-	public void displayVariousStatistics() {
-
-
-	}
-
-	@Override
-	public void displayPremierLeagueTable() {
-
+	public void displayVariousStatistics(String clubName) {
+		System.out.println("----------------------------------------------- " + clubName + " Club Details -----------------------------------------------\n");
 		String tableFormat = "║ %-8s ║ %-25s ║ %-15s ║ %-6s ║ %-3s ║ %-5s ║ %-4s ║ %-4s ║ %-4s ║ %-4s ║ %-6s ║%n";
 		System.out.format("╔══════════╦═══════════════════════════╦═════════════════╦════════╦═════╦═══════╦══════╦══════╦══════╦══════╦════════╗%n");
 		System.out.format("║ Position ║ Club Name                 ║ Location        ║ Played ║ Won ║ Drawn ║ Lost ║ GF   ║ GA   ║ GD   ║ Points ║%n");
 		System.out.format("╠══════════╬═══════════════════════════╬═════════════════╬════════╬═════╬═══════╬══════╬══════╬══════╬══════╬════════╣%n");						//https://coolsymbol.com/  <- for symbols
 
+		boolean check = false;
 		premierLeagueClubsList.sort(Collections.reverseOrder());
 		for (SportsClub sportsClub: premierLeagueClubsList) {
-
-			System.out.format(tableFormat,premierLeagueClubsList.indexOf(sportsClub) + 1,sportsClub.getNameOfTheClub(),sportsClub.getLocation(),((FootballClub) sportsClub).getNumOfPlayedMatches(),
-					((FootballClub) sportsClub).getWon(),((FootballClub) sportsClub).getDrawn(),((FootballClub) sportsClub).getLost(),
-					((FootballClub) sportsClub).getNumOfGoalsScored(),((FootballClub) sportsClub).getNumOfGoalsReceived(),((FootballClub) sportsClub).getNumOfGoalsDifference(),((FootballClub) sportsClub).getNumOfPoints() );
+			if (sportsClub.getNameOfTheClub().equalsIgnoreCase(clubName)){
+				String GF = ((FootballClub) sportsClub).getNumOfGoalsDifference() > 0 ? "+"+((FootballClub) sportsClub).getNumOfGoalsDifference(): String.valueOf(((FootballClub) sportsClub).getNumOfGoalsDifference());
+				check = ((FootballClub) sportsClub).getNumOfPlayedMatches() > 0;
+				System.out.format(tableFormat, premierLeagueClubsList.indexOf(sportsClub) + 1, sportsClub.getNameOfTheClub(), sportsClub.getLocation(), ((FootballClub) sportsClub).getNumOfPlayedMatches(),
+						((FootballClub) sportsClub).getWon(), ((FootballClub) sportsClub).getDrawn(), ((FootballClub) sportsClub).getLost(),
+						((FootballClub) sportsClub).getNumOfGoalsScored(), ((FootballClub) sportsClub).getNumOfGoalsReceived(), GF, ((FootballClub) sportsClub).getNumOfPoints());
+			}
 		}
 		System.out.format("╚══════════╩═══════════════════════════╩═════════════════╩════════╩═════╩═══════╩══════╩══════╩══════╩══════╩════════╝%n");
+		int count = 0;
+		int teamAResult;
+		int teamBResult;
+		String teamAMatchEnd;
+		String teamBMatchEnd;
+		if (check){
+			System.out.println("----------------------------------------------- Matches played by "+clubName+" Club -----------------------------------------------\n");
+			String matchFormat = "║   %-6s ║ %-10s ║ %-24s ║ %-25s ║ %-7s ║ %-25s ║%n";
+			System.out.format("╔══════════╦════════════╦═══════════════════════════╦═══════════════════════════╦═════════╦═══════════════════════════╗%n");
+			System.out.format("║ Match No ║ Date       ║ Stadium                   ║ Team Name                 ║ Result  ║ Team Name                 ║%n");
+			System.out.format("╠══════════╬════════════╬═══════════════════════════╬═══════════════════════════╬═════════╬═══════════════════════════╣%n");						//https://coolsymbol.com/  <- for symbols
+			for (SportsClub teamA : listOfMatchesTeamA) {
+				SportsClub teamB = listOfMatchesTeamB.get(listOfMatchesTeamA.indexOf(teamA));
+				if (teamA.getNameOfTheClub().equalsIgnoreCase(clubName)) {
+					count++;
+					teamAResult = ((FootballClub) teamA).getNumOfGoalsScored();
+					teamBResult = ((FootballClub) teamB).getNumOfGoalsScored();
+					if (teamAResult > teamBResult) {
+						teamAMatchEnd = " (WON)";
+						teamBMatchEnd = " (LOST)";
+					} else if (teamAResult == teamBResult) {
+						teamAMatchEnd = " (DRAWN)";
+						teamBMatchEnd = " (DRAWN)";
+					} else {
+						teamBMatchEnd = " (WON)";
+						teamAMatchEnd = " (LOST)";
+					}
+
+					System.out.format(matchFormat, count, ((FootballClub) teamA).getMatchDate(), ((FootballClub) teamA).getMatchVenue(), clubName + teamAMatchEnd, String.format("%02d", teamAResult) + " : " + String.format("%02d", teamBResult), teamB.getNameOfTheClub() + teamBMatchEnd);
+				}
+			}
+			for (SportsClub teamA : listOfMatchesTeamB) {
+				SportsClub teamB = listOfMatchesTeamA.get(listOfMatchesTeamB.indexOf(teamA));
+				if (teamA.getNameOfTheClub().equalsIgnoreCase(clubName)) {
+					count++;
+					teamAResult = ((FootballClub) teamA).getNumOfGoalsScored();
+					teamBResult = ((FootballClub) teamB).getNumOfGoalsScored();
+					if (teamAResult > teamBResult) {
+						teamAMatchEnd = " (WON)";
+						teamBMatchEnd = " (LOST)";
+					} else if (teamAResult == teamBResult) {
+						teamAMatchEnd = " (DRAWN)";
+						teamBMatchEnd = " (DRAWN)";
+					} else {
+						teamBMatchEnd = " (WON)";
+						teamAMatchEnd = " (LOST)";
+					}
+					System.out.format(matchFormat, count, ((FootballClub) teamA).getMatchDate(), ((FootballClub) teamA).getMatchVenue(), clubName + teamAMatchEnd, String.format("%02d", teamAResult) + " : " + String.format("%02d", teamBResult), teamB.getNameOfTheClub() + teamBMatchEnd);
+				}
+			}
+			System.out.format("╚══════════╩════════════╩═══════════════════════════╩═══════════════════════════╩═════════╩═══════════════════════════╝%n");
+		}
+	}
+
+	@Override
+	public void displayPremierLeagueTable() {
+
+		String tableFormat = "║ %-8s ║ %-15s ║ %-25s ║ %-15s ║ %-6s ║ %-3s ║ %-5s ║ %-4s ║ %-4s ║ %-4s ║ %-4s ║ %-6s ║%n";
+		System.out.format("╔══════════╦═════════════════╦═══════════════════════════╦═════════════════╦════════╦═════╦═══════╦══════╦══════╦══════╦══════╦════════╗ GF = \"Goals For\"%n");
+		System.out.format("║ Position ║ Last Played Day ║ Club Name                 ║ Location        ║ Played ║ Won ║ Drawn ║ Lost ║ GF   ║ GA   ║ GD   ║ Points ║ GA = \"Goals Against\"%n");
+		System.out.format("╠══════════╬═════════════════╬═══════════════════════════╬═════════════════╬════════╬═════╬═══════╬══════╬══════╬══════╬══════╬════════╣ GD = \"Goals Difference\"%n");						//https://coolsymbol.com/  <- for symbols
+
+		premierLeagueClubsList.sort(Collections.reverseOrder());
+		for (SportsClub sportsClub: premierLeagueClubsList) {
+			String GF = ((FootballClub) sportsClub).getNumOfGoalsDifference() > 0 ? "+"+((FootballClub) sportsClub).getNumOfGoalsDifference(): String.valueOf(((FootballClub) sportsClub).getNumOfGoalsDifference());
+			System.out.format(tableFormat,premierLeagueClubsList.indexOf(sportsClub) + 1,((FootballClub) sportsClub).getMatchDate(),sportsClub.getNameOfTheClub(),sportsClub.getLocation(),
+					((FootballClub) sportsClub).getNumOfPlayedMatches(),((FootballClub) sportsClub).getWon(),((FootballClub) sportsClub).getDrawn(),((FootballClub) sportsClub).getLost(),
+					((FootballClub) sportsClub).getNumOfGoalsScored(),((FootballClub) sportsClub).getNumOfGoalsReceived(),GF,((FootballClub) sportsClub).getNumOfPoints() );
+		}
+		System.out.format("╚══════════╩═════════════════╩═══════════════════════════╩═════════════════╩════════╩═════╩═══════╩══════╩══════╩══════╩══════╩════════╝%n");
 	}
 
 
@@ -90,9 +161,9 @@ public class PremierLeagueManager implements LeagueManager{
 				}else {
 					lost += 1;
 				}
-				clubUpdate = new FootballClub(team,sportsClub.getLocation(),sportsClub.getNumOfMembers(),date,stadium,teamGoals,otherTeamGoals);
+				clubUpdate = new FootballClub(date,team,sportsClub.getLocation(),sportsClub.getNumOfMembers(),stadium,teamGoals,otherTeamGoals);
 
-				if (teamNum.equals("Team A")){
+				if (teamNum.equalsIgnoreCase("Team A")){
 					listOfMatchesTeamA.add(clubUpdate);
 					System.out.println(listOfMatchesTeamA.toString());
 				}else {
@@ -111,6 +182,8 @@ public class PremierLeagueManager implements LeagueManager{
 		FileOutputStream file = new FileOutputStream(fileName);
 		ObjectOutputStream outputStream = new ObjectOutputStream(file);
 		outputStream.writeObject(premierLeagueClubsList);
+		outputStream.writeObject(listOfMatchesTeamA);
+		outputStream.writeObject(listOfMatchesTeamB);
 		outputStream.flush();
 		outputStream.close();
 		file.close();
@@ -122,6 +195,9 @@ public class PremierLeagueManager implements LeagueManager{
 		FileInputStream fis = new FileInputStream(fileName);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		premierLeagueClubsList = (ArrayList) ois.readObject();
+		listOfMatchesTeamA = (ArrayList) ois.readObject();
+		listOfMatchesTeamB = (ArrayList) ois.readObject();
+		System.out.println("Data loaded successful!");
 		ois.close();
 		fis.close();
 	}

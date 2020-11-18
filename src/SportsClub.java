@@ -12,11 +12,6 @@ public class SportsClub implements Serializable {
 		this.numOfMembers = numOfMembers;
 	}
 
-//	public SportsClub(String firstTeam, String location) {
-//		this.nameOfTheClub = firstTeam;
-//		this.location = location;
-//	}
-
 	public String getNameOfTheClub() {
 		return nameOfTheClub;
 	}

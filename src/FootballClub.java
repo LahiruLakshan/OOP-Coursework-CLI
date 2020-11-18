@@ -29,7 +29,7 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 		this.numOfPlayedMatches = numOfPlayedMatches;
 	}
 
-	public FootballClub(String nameOfTheClub, String location, int numOfMembers, String matchDate, String matchVenue, int numOfGoalsScored, int numOfGoalsReceived) {
+	public FootballClub( String matchDate, String nameOfTheClub, String location, int numOfMembers, String matchVenue, int numOfGoalsScored, int numOfGoalsReceived) {
 		super(nameOfTheClub, location, numOfMembers);
 		this.matchDate = matchDate;
 		this.matchVenue = matchVenue;
