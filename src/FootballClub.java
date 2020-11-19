@@ -10,14 +10,16 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 	private int numOfGoalsDifference;
 	private int numOfPoints;
 	private int numOfPlayedMatches;
+	private int position;
 
 
 	public FootballClub(String nameOfTheClub, String location, int numOfMembers) {		//create a club
 		super(nameOfTheClub, location, numOfMembers);
 	}
 	//for premier league table
-	public FootballClub(String nameOfTheClub, String location, int numOfMembers, String matchDate, int numOfPlayedMatches, int won, int drawn, int lost, int numOfGoalsScored, int numOfGoalsReceived, int numOfGoalsDifference, int numOfPoints) {
+	public FootballClub(int position,String nameOfTheClub, String location, int numOfMembers, String matchDate, int numOfPlayedMatches, int won, int drawn, int lost, int numOfGoalsScored, int numOfGoalsReceived, int numOfGoalsDifference, int numOfPoints) {
 		super(nameOfTheClub, location, numOfMembers);
+		this.position = position;
 		this.matchDate = matchDate;
 		this.won = won;
 		this.drawn = drawn;
@@ -46,6 +48,14 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 	//		this.numOfPoints = points;
 	//		this.numOfPlayedMatches = i1;
 	//	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
 
 	public int getWon() {
 		return won;
@@ -126,7 +136,6 @@ public class FootballClub extends SportsClub implements Comparable<FootballClub>
 	public void setMatchVenue(String matchVenue) {
 		this.matchVenue = matchVenue;
 	}
-
 
 	@Override
 	public String toString() {

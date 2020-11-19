@@ -1,3 +1,5 @@
+import javafx.application.Application;
+
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -31,7 +33,8 @@ public class Main {
 				System.out.println("\t\t3. Display the various statistics for a selected club.");
 				System.out.println("\t\t4. Display the Premier League Table.");
 				System.out.println("\t\t5. Add a played match.");
-				System.out.println("\t\t6. Exit the Programme.");
+				System.out.println("\t\t6. Open a Graphical User Interface.");
+				System.out.println("\t\t7. Exit the Programme.");
 				System.out.print("Select the number you want(1 to 7) : ");
 				String select = input.next();
 
@@ -63,6 +66,12 @@ public class Main {
 						break;
 
 					case "6":
+						Application.launch(PremierLeagueGUIFX.class);
+						leagueManager.dataSaveToFile("premierLeagueClubsList.txt");
+						System.exit(0);
+						break;
+
+					case "7":
 						leagueManager.dataSaveToFile("premierLeagueClubsList.txt");
 						System.out.println("\n************************************************************* End the Programme *************************************************************");
 						decisionCheck = true;
@@ -195,7 +204,7 @@ public class Main {
 		}else {
 			System.out.println("\t~ There must be at least 2 teams to play one match!");
 		}
-
+//
 //		leagueManager.addPlayedMatchDetails("2020-04-09"," Emirates Stadium, London","Manchester United",12,6, "Team A");
 //		leagueManager.addPlayedMatchDetails("2020-04-09"," Emirates Stadium, London","Everton",6,12, "Team B");
 //
